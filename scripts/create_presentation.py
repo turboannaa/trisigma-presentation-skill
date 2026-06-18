@@ -547,8 +547,14 @@ def apply_target_lines(slides_service, presentation_id: str,
 def fit_text_to_frame(slides_service, presentation_id: str,
                       slide_assignments: list):
     """
-    Автоматически уменьшает/увеличивает шрифт чтобы текст влезал во фрейм.
-    Элементы одного слайда с одинаковым исходным pt выравниваются в одну группу.
+    Корректирует размер шрифта — не более чем на ±5pt от значения шаблона.
+
+    ВАЖНОЕ ПРАВИЛО: если шаблон не хранит fontSize явно в textRun.style
+    (использует тему/мастер), элемент пропускается — шрифт не трогаем.
+    Это сохраняет крупные заголовки, цитаты и акцентные тексты из шаблона.
+
+    Элементы одного слайда с одинаковым исходным pt выравниваются в одну группу
+    (все заголовки одного размера, все описания — тоже).
     """
     pres = get_presentation(slides_service, presentation_id)
 
@@ -567,6 +573,7 @@ def fit_text_to_frame(slides_service, presentation_id: str,
         return lines * pt * 12700 * 1.45 + pt * 12700 * 1.0
 
     def optimal_pt(text, orig_pt, eff_w, eff_h):
+        """±5pt максимум от orig_pt шаблона."""
         if estimate_height(text, orig_pt, eff_w) <= eff_h:
             best = orig_pt
             for delta in range(1, 6):
@@ -582,6 +589,7 @@ def fit_text_to_frame(slides_service, presentation_id: str,
                     return 10
                 if estimate_height(text, c, eff_w) <= eff_h:
                     return c
+            # Максимальное уменьшение — 5pt, не больше
             return max(10, orig_pt - 5)
 
     groups = defaultdict(list)
@@ -603,12 +611,19 @@ def fit_text_to_frame(slides_service, presentation_id: str,
             if eff_w <= 0 or eff_h <= 0:
                 continue
 
-            font_pt = 18.0
+            # Ищем fontSize в textRun.style (явный размер шрифта)
+            font_pt = None
             for te in elem['shape'].get('text', {}).get('textElements', []):
                 fs = te.get('textRun', {}).get('style', {}).get('fontSize', {})
                 if fs.get('magnitude'):
                     font_pt = float(fs['magnitude'])
                     break
+
+            # КЛЮЧЕВОЕ: если fontSize не задан явно в шаблоне (None) —
+            # шаблон использует тему/мастер, не трогаем этот элемент.
+            # Иначе рискуем уменьшить крупный акцентный шрифт до 13pt.
+            if font_pt is None:
+                continue
 
             opt = optimal_pt(new_text, font_pt, eff_w, eff_h)
             groups[(slide_id, round(font_pt))].append((real_id, opt))
@@ -631,7 +646,7 @@ def fit_text_to_frame(slides_service, presentation_id: str,
             })
 
     if requests:
-        print(f"  Выравниваю шрифт в {len(requests)} элементах...")
+        print(f"  Корректирую шрифт в {len(requests)} элементах (±5pt от шаблона)...")
         slides_service.presentations().batchUpdate(
             presentationId=presentation_id,
             body={"requests": requests}
