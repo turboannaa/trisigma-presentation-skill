@@ -1,0 +1,248 @@
+{
+  "title": "AI в A/B тестах — Виталий Черемисинов",
+  "slides": [
+    {
+      "template_id": "g3c3ed77914d_0_97",
+      "description": "Титульный слайд",
+      "element_replacements": {
+        "g3c3ed77914d_0_98": "AI в A/B тестах",
+        "g3c3ed77914d_0_99": "Виталий Черемисинов",
+        "g3c3ed77914d_1_508": "CEO | Trisigma.io | (ex.EXPF)"
+      }
+    },
+    {
+      "template_id": "g3c3ed77914d_1_888",
+      "description": "Пара слов про меня",
+      "element_replacements": {
+        "g3c3ed77914d_1_889": "Пара слов про меня",
+        "g3c3ed77914d_1_890": "CEO & co-founder EXPF – SaaS B2B платформа по автоматизации A/B\nВ 2025 EXPF был куплен AVITO\nТеперь – CEO Trisigma.io"
+      },
+      "custom_images": [
+        {
+          "url": "https://lh7-rt.googleusercontent.com/slidesz/AGV_vUdf-hgve0__BiyWDORwVTS1KIqs35iYfDnzbz6ennCG6yYBhM394KjckhMGdMzGj9sqYA2J12vR1jxefE93g796Wngivbmw7pTqDVxuHZ5ZbVRgXFFNGNSdhbQS1FBZ362C3w_Na5fi2aydsrIMxsg7po-gO5bFpBSlRHP2BiBEKMwKKroEQw=s2048?key=DuOBuAC59i3fel1vtGkioQ",
+          "x_cm": 10.11, "y_cm": 0.50, "w_cm": 4.52, "h_cm": 4.80
+        }
+      ]
+    },
+    {
+      "template_id": "g3c3ed77914d_1_844",
+      "description": "О чем мы сегодня поговорим",
+      "element_replacements": {
+        "g3c3ed77914d_1_845": "О чем мы сегодня поговорим",
+        "g3c3ed77914d_1_846": "Фазы развития культуры A/B и где тут AI\nКак кол-во A/B и инфраструктура влияет на возможность использовать AI\nВажные, но редко обсуждаемые проблемы настоящего"
+      }
+    },
+    {
+      "template_id": "g3c3ed77914d_1_876",
+      "description": "Фазы развития культуры A/B в компании",
+      "element_replacements": {
+        "g3c3ed77914d_1_877": "Фазы развития культуры A/B в компании",
+        "g3c3ed77914d_1_879": "1",
+        "g3c3ed77914d_1_878": "нет аб / ситуативные аб",
+        "g3c3ed77914d_1_881": "2",
+        "g3c3ed77914d_1_880": "аб проводятся в командах независимо, вне единой платформы",
+        "g3c3ed77914d_1_883": "3",
+        "g3c3ed77914d_1_882": "единая аб платформа, единый центр принятия решений, единый центр знаний и семантический слой",
+        "g3c3ed77914d_1_885": "4",
+        "g3c3ed77914d_1_884": "аб встроено в стратегию как направление по генерации new money"
+      }
+    },
+    {
+      "template_id": "g3c3ed77914d_1_844",
+      "description": "Фаза 4",
+      "element_replacements": {
+        "g3c3ed77914d_1_845": "Фаза 4",
+        "g3c3ed77914d_1_846": "При росте кол-ва A/B – вы попадает в плато эффектов. Тестов все больше – а эффекты все ниже.\n\nВ этот момент эксперименты – становятся не просто инструментом проверки идей, но и исследовательским сырьем\n\nМы выделяем новый слой данных – experiment pool и verdict pool. На основе истории экспериментов – мы можем придумывать новые метрики, которые «чувствительнее» и быстрее показывают результаты наших действий."
+      },
+      "image_url": "https://lh7-rt.googleusercontent.com/slidesz/AGV_vUfI7l-6vEktP8fRziaVdqPumjgZEV-Qx8-eZ4sMnnVeEuWtoZvadJcwoZl2_zQiTTbkdQKDhnkhD8mFlJryw7Zrky3m49pWhhhN8HnImsSMwoOgD_YiaWGSGCtWiTVXt0tfiiim2GWgYvpfbtqSSn3eMykpZPuSKbPY7h1vTqDuLAB8GKUjYA=s2048?key=DuOBuAC59i3fel1vtGkioQ",
+      "image_size": [940, 526]
+    },
+    {
+      "template_id": "g3c3ed77914d_1_895",
+      "description": "Результаты экспериментов — источник знаний о качестве метрик",
+      "element_replacements": {
+        "g3c3ed77914d_1_896": "Результаты экспериментов теперь – источник знаний о качестве новых метрик",
+        "g3c3ed77914d_1_897": "Эксперименты теперь – не просто история про оценку эффектов, это новый ценный слой данных, на основе которого мы можем придумывать и валидировать более чувствительные метрики"
+      },
+      "image_url": "https://lh7-rt.googleusercontent.com/slidesz/AGV_vUfrdDdhOyW1KA6o_kaGs5njc4OJyf5b1SYv-7Zs4ZDtbZfoBxkCyfLOsnquz-Npmx_6et2P-5SiZPQzxZOcIXbE1CLYX6d3C9t4ZsPdjOWh_Eg2cgWt9qnQymM4qZoS5Vlu3meIMEhPMoDKwV8lFiPxWB9KR5YtO1uWiv-UdxljYIGksCnbkg=s2048?key=DuOBuAC59i3fel1vtGkioQ",
+      "image_size": [1222, 302]
+    },
+    {
+      "template_id": "g3c3ed77914d_1_856",
+      "description": "Что это дает",
+      "element_replacements": {
+        "g3c3ed77914d_1_857": "Что это дает",
+        "g3c3ed77914d_1_858": "Возможность валидировать метрики через пул – дает возможность искать более чувствительные измерения, что позитивно сказывается на скорости экспериментов и итогах",
+        "g3c3ed77914d_1_859": "Чувствительность – с темпами роста экспериментов, становится одной из главных болей",
+        "g3c3ed77914d_1_860": "Все больше экспериментов заканчивается ничем\nВремени на то, чтобы доказать эффект – уходит столько же\nПул экспериментов и прокси метрик – один из самых эффективных механизмов"
+      }
+    },
+    {
+      "template_id": "g3c3ed77914d_1_895",
+      "description": "Как мы теперь можем смотреть на метрики (hidden)",
+      "hidden": true,
+      "element_replacements": {
+        "g3c3ed77914d_1_896": "Как мы теперь можем смотреть на метрики – представим, что вы развивается поиск",
+        "g3c3ed77914d_1_897": "В самой концепции – уже ничего нового. Про это много кто рассказывал, но проблема в другом – очень мало кто делает\nИ вероятно хочется задаться логичным вопросом – а причем тут AI?"
+      },
+      "image_url": "https://lh7-rt.googleusercontent.com/slidesz/AGV_vUdkbVoO30Tc3wFvreuLT1KGoEsLvgEze-TvUb-z5FbxLH7iqCwjiM2jsW_OaDNwShRXqItZPsvL-aKXqyTJ8M0UJj4oCYSIs-fMboYBB5g21mnIKiX75poqzkJb8a6h6dgllLSGSHJw0RFu0ijLsNdYpCWlT2tHEJbJnTWUm_vJn-t-SHWqAw=s2048?key=DuOBuAC59i3fel1vtGkioQ",
+      "image_size": [1148, 1080]
+    },
+    {
+      "template_id": "g3c3ed77914d_1_895",
+      "description": "Как мы теперь можем смотреть на метрики",
+      "element_replacements": {
+        "g3c3ed77914d_1_896": "Как мы теперь можем смотреть на метрики – представим, что вы развивается поиск",
+        "g3c3ed77914d_1_897": "В самой концепции – уже ничего нового. Про это много кто рассказывал, но проблема в другом – очень мало кто делает\nИ вероятно хочется задаться логичным вопросом – а причем тут AI?"
+      },
+      "image_url": "https://lh7-rt.googleusercontent.com/slidesz/AGV_vUcs_AKUMmgNG4MgL97ijw1dxyJoHjgPofevgU0X6DaIdC29WO8kLDoM7Jfp2TYHBsyUbhO-HjMwrllVljrbZwBslI9mPRpA01K9THgZJ6qnfpVaitHrmkcfReY6eQ3iOOKPEtJzjOTmW7j6LPPxV3Gtk8MfO_vIzQj-AtK6LGXoptvDC-RuFw=s2048?key=DuOBuAC59i3fel1vtGkioQ",
+      "image_size": [1285, 1160]
+    },
+    {
+      "template_id": "g3c3ed77914d_1_895",
+      "description": "К чему это",
+      "element_replacements": {
+        "g3c3ed77914d_1_896": "К чему это",
+        "g3c3ed77914d_1_897": ""
+      },
+      "image_url": "https://lh7-rt.googleusercontent.com/slidesz/AGV_vUcoII2hd7hyG614At58zr36ZOW3hEJlhCh3PMKKrZOZTBpL3owkjCxGYEAE1oVI03rDzi4bcEAm2ykoNX4wTEumWEFWdWS02G_OzDYEJF8koJ_MCnpXIuM5iKaRqC9M_Cb9-bcF99PJIRUceolOMNX4IQKrRC4magY2RSOGHLS8ug3jAj8=s2048?key=DuOBuAC59i3fel1vtGkioQ",
+      "image_size": [2455, 397]
+    },
+    {
+      "template_id": "g3c3ed77914d_1_844",
+      "description": "A/B в эпоху AI — саммари",
+      "element_replacements": {
+        "g3c3ed77914d_1_845": "A/B в эпоху AI",
+        "g3c3ed77914d_1_846": "это больше саммари. Но с качественной разметкой и контекстом, можно делать предварительную валидацию."
+      }
+    },
+    {
+      "template_id": "g3c3ed77914d_1_895",
+      "description": "Слой разметки для обучения",
+      "element_replacements": {
+        "g3c3ed77914d_1_896": "Слой разметки для обучения",
+        "g3c3ed77914d_1_897": ""
+      },
+      "image_url": "https://lh7-rt.googleusercontent.com/slidesz/AGV_vUcoII2hd7hyG614At58zr36ZOW3hEJlhCh3PMKKrZOZTBpL3owkjCxGYEAE1oVI03rDzi4bcEAm2ykoNX4wTEumWEFWdWS02G_OzDYEJF8koJ_MCnpXIuM5iKaRqC9M_Cb9-bcF99PJIRUceolOMNX4IQKrRC4magY2RSOGHLS8ug3jAj8=s2048?key=DuOBuAC59i3fel1vtGkioQ",
+      "image_size": [2455, 397]
+    },
+    {
+      "template_id": "g3c3ed77914d_1_895",
+      "description": "Слой разметки для обучения (hidden)",
+      "hidden": true,
+      "element_replacements": {
+        "g3c3ed77914d_1_896": "Слой разметки для обучения",
+        "g3c3ed77914d_1_897": ""
+      },
+      "image_url": "https://lh7-rt.googleusercontent.com/slidesz/AGV_vUdwXAsQd_2tIZhQZofOSxPFiyfe2uXV-lPm0b_M8Yk0Bes6NLBEmY08XsSfMZolIzpFLXSfQ0nNkzO1sPsONvb5GFFdB8spcjR5adRIvT3LuVs2KliK1WT3xR8VbOzhQd74y82mx1Z1Tvg__z6aPPJyWzPoSsW23nt5HnZg2BRJ_I8rsNM=s2048?key=DuOBuAC59i3fel1vtGkioQ",
+      "image_size": [2411, 268]
+    },
+    {
+      "template_id": "g3c3ed77914d_1_895",
+      "description": "Что нужно — Первое: сырье",
+      "element_replacements": {
+        "g3c3ed77914d_1_896": "Что нужно, чтобы это могло работать",
+        "g3c3ed77914d_1_897": "Первое – сырье"
+      },
+      "image_url": "https://lh7-rt.googleusercontent.com/slidesz/AGV_vUclnRxQGX0eGu0skf1dAtRO0csAg11OOt2yMNXHOt15YSapvs_hwqbzMhmtI0yyv95zKMYwmb6H4UGx3S_h95zJddqjPAF1z4gNc4gHH_sj2I06TGIPesq9W4sAbGRYBMp0_ToPevqJwWmRPkf8lLXGrRV47DQYqYlisTteuvyQ6_wDZ6w=s2048?key=DuOBuAC59i3fel1vtGkioQ",
+      "image_size": [2301, 1129]
+    },
+    {
+      "template_id": "g3c3ed77914d_1_895",
+      "description": "Что нужно — Первое: сырье (hidden)",
+      "hidden": true,
+      "element_replacements": {
+        "g3c3ed77914d_1_896": "Что нужно, чтобы это могло работать",
+        "g3c3ed77914d_1_897": "Первое – сырье"
+      },
+      "image_url": "https://lh7-rt.googleusercontent.com/slidesz/AGV_vUc5NwQAdGyrMDqBl9aa8hSG4WsE5qQbxMfYVVQTm0BonEo5kqyOiGNpgqeuDJIcbNmdpHJfuEg_tGYrZr7pt9vgQgCJI2yC_BhP3N0VsLRh_ciNvaMAHm8v6zl6FSltun446hgyQRb9810utqtlXuSHCng0liz9t5KMjpgCIlNnPubP7gg=s2048?key=DuOBuAC59i3fel1vtGkioQ",
+      "image_size": [2399, 895]
+    },
+    {
+      "template_id": "g3c3ed77914d_1_895",
+      "description": "Что нужно — Второе: качество вердиктов",
+      "element_replacements": {
+        "g3c3ed77914d_1_896": "Что нужно, чтобы это могло работать",
+        "g3c3ed77914d_1_897": "Второе – качество вердиктов"
+      },
+      "image_url": "https://lh7-rt.googleusercontent.com/slidesz/AGV_vUdVDED-hNqMJYqWSzSv2WYHt7vOCHe8txToWq9bwCiEkgPiFC0jdMkNF4qXOqgM_7r6WdWAmSjb_RgJi7_2iSraM54yz39INjzPXUCc4FeLfpIg97OTWmIeHx8rQqTIBJL6WZHkpCgUDARjExdLe0ABmp88l_UloE2ePtystAQW7GNjfUU=s2048?key=DuOBuAC59i3fel1vtGkioQ",
+      "image_size": [2455, 853]
+    },
+    {
+      "template_id": "g3c3ed77914d_1_895",
+      "description": "Схема агента — стек (hidden)",
+      "hidden": true,
+      "element_replacements": {
+        "g3c3ed77914d_1_896": "Как будет работать схема агента",
+        "g3c3ed77914d_1_897": "LLM-слой: GPT-4o / Claude 3.5 / Gemini. Vector store: pgvector / Weaviate. Orchestration: LangGraph / CrewAI. Data layer: ClickHouse. Verdict storage: Postgres JSONB. API: FastAPI + webhook."
+      },
+      "image_url": "https://lh7-rt.googleusercontent.com/slidesz/AGV_vUd80jZP0avOPNIiaJ8WgBheyMHdi17WHXuXvFHcH4YI4dUoZFa_E6azDxjZ9rSdw-ZJf5GzwURxNEQq6wc_z_ppvWy9VHZ2oBjSixqwyZ4R99KGSRgMw8ON8aFB9VRbzhm6B9mJyAzMxkwUUBQlKkTsuHvFzr_RlJAUFaH1Qh4iitDvesFndQ=s2048?key=DuOBuAC59i3fel1vtGkioQ",
+      "image_size": [835, 1088]
+    },
+    {
+      "template_id": "g3c3ed77914d_1_895",
+      "description": "Схема агента — диаграмма 1",
+      "element_replacements": {
+        "g3c3ed77914d_1_896": "Как будет работать схема агента",
+        "g3c3ed77914d_1_897": "LLM-слой: GPT-4o / Claude 3.5 / Gemini. Vector store: pgvector / Weaviate. Orchestration: LangGraph / CrewAI. Data layer: ClickHouse. Verdict storage: Postgres JSONB. API: FastAPI + webhook."
+      },
+      "image_url": "https://lh7-rt.googleusercontent.com/slidesz/AGV_vUc-bR2hVbnanZe9NrsGSIuUoulPHJK9ZYR_8H-IY0sJOWtcb_7aIsLarm5l1W1TA4NY08s8s-YBipbiyd1kGtLXp6_WLXpMIiI44Lxndw5m3haqVrSfqjO87vns_iRyD3wWrngX-p8SqhfTLAtRFj79gihQ6Wov6P7jSK-dqFOmwfdSP0wSKQ=s2048?key=DuOBuAC59i3fel1vtGkioQ",
+      "image_size": [1154, 1158]
+    },
+    {
+      "template_id": "g3c3ed77914d_1_895",
+      "description": "Схема агента — диаграмма 2 (hidden)",
+      "hidden": true,
+      "element_replacements": {
+        "g3c3ed77914d_1_896": "Как будет работать схема агента",
+        "g3c3ed77914d_1_897": "LLM-слой: GPT-4o / Claude 3.5 / Gemini. Vector store: pgvector / Weaviate. Orchestration: LangGraph / CrewAI. Data layer: ClickHouse. Verdict storage: Postgres JSONB."
+      },
+      "image_url": "https://lh7-rt.googleusercontent.com/slidesz/AGV_vUcWfHhgeIAzlRlVEP7x6r1TwCv9M_0bsqYoLEv0UGUNHKaIiawyvjVzXurOyr9jf8HbiL34ZP1ehYM3zFfisc8J2fv2suRwLa1tFP5RPjgJiMiOqNKmIAbGH0IEyvbDYQTaT1tvfykrfhKCryGp9eM8iO2u0ZopTSavvJO4txszQhCpsM-CbA=s2048?key=DuOBuAC59i3fel1vtGkioQ",
+      "image_size": [1006, 1129]
+    },
+    {
+      "template_id": "g3c3ed77914d_1_895",
+      "description": "Схема агента — диаграмма 3",
+      "element_replacements": {
+        "g3c3ed77914d_1_896": "Как будет работать схема агента",
+        "g3c3ed77914d_1_897": "LLM-слой: GPT-4o / Claude 3.5 / Gemini. Vector store: pgvector / Weaviate. Orchestration: LangGraph / CrewAI. Data layer: ClickHouse. Verdict storage: Postgres JSONB."
+      },
+      "image_url": "https://lh7-rt.googleusercontent.com/slidesz/AGV_vUdJXS5vm7sIyM-wSx7YKxP3fj-PSUPlBJj_LjqCrATzoRGSrgn1BB-Ttz5_sWfVTro1fDuktdE46a56HQJqX9pFVe6G1-kKsEuGq5DgVZni9geX0qbh-0z0gSTfa2Zdrx_rW6MGhzXSThUV_WMOAewXR42NQ8Y_CZ9sJTOEs1W0do3wA-RJgg=s2048?key=DuOBuAC59i3fel1vtGkioQ",
+      "image_size": [1154, 1158]
+    },
+    {
+      "template_id": "g3c3ed77914d_1_856",
+      "description": "Схема агента — возможности и ограничения",
+      "element_replacements": {
+        "g3c3ed77914d_1_857": "Как будет работать схема агента",
+        "g3c3ed77914d_1_858": "Возможности: Pre-validation — до запуска теста агент говорит что исторически работает в каждом сегменте. Авто-саммаризация — структурированный вердикт сразу после теста. Proxy metric validation — через LabelAgreement. Hypothesis generation — агент предлагает следующие гипотезы. Аудит — все вердикты хранятся.",
+        "g3c3ed77914d_1_859": "Ограничения",
+        "g3c3ed77914d_1_860": "Качество сырья критично: от ~150 тестов. Garbage in, garbage out по вердиктам. Галлюцинации в pre-validation — нужен confidence score. Causal reasoning: агент работает с корреляциями, не причинностью. Высокая зависимость от структуры данных. Проблема новых доменов: cold start от 50+ вердиктов."
+      }
+    },
+    {
+      "template_id": "g3c3ed77914d_1_844",
+      "description": "Что представляет из себя агент сейчас",
+      "element_replacements": {
+        "g3c3ed77914d_1_845": "Что представляет из себя агент сейчас",
+        "g3c3ed77914d_1_846": "Продукт – в процессе пилотирования на малой выборке клиентов\n\nСейчас продукт – больше представляет из себя консалтинг для тех, кто проводит достаточно большое кол-во экспериментов и хочет еще больше автоматизировать процесс работы с экспериментами"
+      }
+    },
+    {
+      "template_id": "g3c3ed77914d_1_844",
+      "description": "О чем еще полезно подумать в контексте A/B и AI",
+      "element_replacements": {
+        "g3c3ed77914d_1_845": "О чем еще полезно подумать в контексте A/B и AI",
+        "g3c3ed77914d_1_846": "Учет агентного трафика, а не просто вычищение\nРост доли трафика от агентов – это не боты, это новый слой. Агент не спотыкается о UX паттерны / не чувствителен к UI и прочему. На агентов нужно смотреть отдельно и учитывать эти феномены.\n\nКак никогда важна инженерная культура данных\nЕсли у вас беспорядок в данных – вы можете забыть про AI аналитиков. Подход txt to sql – не работает, агент насыпет вас галлюцинаций. Необходим хороший семантический слой + строгий eval процесс."
+      }
+    },
+    {
+      "template_id": "g3c3ed77914d_1_844",
+      "description": "Во что я не верю",
+      "element_replacements": {
+        "g3c3ed77914d_1_845": "Во что я не верю – во всяком случае сейчас",
+        "g3c3ed77914d_1_846": "AI prompt ready UI через визуальный редактор\nСинтетические пользователи вместо обычных"
+      }
+    }
+  ]
+}

@@ -352,17 +352,24 @@ def handle_image_placeholders(slides_service, presentation_id: str,
 
         delete_requests.append({"deleteObject": {"objectId": image_frame_elem['objectId']}})
 
-        img_size = _get_image_size_px(image_url)
+        # Prefer image_size from plan.json (avoids unreliable Drive download)
+        plan_img_size = plan_slide.get('image_size')
+        if plan_img_size:
+            img_size = tuple(plan_img_size)
+        else:
+            img_size = _get_image_size_px(image_url)
+
         if img_size:
             img_w_px, img_h_px = img_size
             img_ratio = img_w_px / img_h_px
             frame_ratio = frame_w / frame_h
-            if img_ratio < frame_ratio:
-                new_h = frame_h
-                new_w = frame_h * img_ratio
-            else:
+            # Fit inside frame preserving aspect ratio
+            if img_ratio > frame_ratio:
                 new_w = frame_w
                 new_h = frame_w / img_ratio
+            else:
+                new_h = frame_h
+                new_w = frame_h * img_ratio
             cx = frame_x + (frame_w - new_w) / 2
             cy = frame_y + (frame_h - new_h) / 2
         else:
@@ -683,6 +690,162 @@ def apply_font_sizes(slides_service, presentation_id: str,
         ).execute()
 
 
+def add_custom_texts(slides_service, presentation_id: str,
+                     slide_assignments: list):
+    """
+    Добавляет произвольные текстовые блоки на слайды.
+
+    Формат в plan.json:
+        "custom_texts": [
+          {
+            "text": "ЗАГОЛОВОК БЛОКА",
+            "x_cm": 0.5, "y_cm": 2.8, "w_cm": 11.5, "h_cm": 0.8,
+            "font_size": 12,
+            "color": "#003bff",
+            "bold": true
+          }
+        ]
+    """
+    import uuid
+
+    def hex_to_rgb(hex_color: str):
+        h = hex_color.lstrip('#')
+        return tuple(int(h[i:i+2], 16) / 255 for i in (0, 2, 4))
+
+    create_requests = []
+    text_requests = []
+
+    for plan_slide, slide_id, _ in slide_assignments:
+        for spec in plan_slide.get("custom_texts", []):
+            box_id = "ct_" + uuid.uuid4().hex[:10]
+            x_emu = spec["x_cm"] * CM_TO_EMU
+            y_emu = spec["y_cm"] * CM_TO_EMU
+            w_emu = spec["w_cm"] * CM_TO_EMU
+            h_emu = spec["h_cm"] * CM_TO_EMU
+
+            create_requests.append({
+                "createShape": {
+                    "objectId": box_id,
+                    "shapeType": "TEXT_BOX",
+                    "elementProperties": {
+                        "pageObjectId": slide_id,
+                        "size": {
+                            "width":  {"magnitude": w_emu, "unit": "EMU"},
+                            "height": {"magnitude": h_emu, "unit": "EMU"}
+                        },
+                        "transform": {
+                            "scaleX": 1, "scaleY": 1,
+                            "translateX": x_emu, "translateY": y_emu,
+                            "unit": "EMU"
+                        }
+                    }
+                }
+            })
+
+            text = spec.get("text", "")
+            r, g, b = hex_to_rgb(spec.get("color", "#000000"))
+            font_size = spec.get("font_size", 11)
+
+            text_requests.append({
+                "insertText": {
+                    "objectId": box_id,
+                    "insertionIndex": 0,
+                    "text": text
+                }
+            })
+            text_requests.append({
+                "updateTextStyle": {
+                    "objectId": box_id,
+                    "textRange": {"type": "ALL"},
+                    "style": {
+                        "fontSize": {"magnitude": font_size, "unit": "PT"},
+                        "foregroundColor": {
+                            "opaqueColor": {
+                                "rgbColor": {"red": r, "green": g, "blue": b}
+                            }
+                        },
+                        "bold": spec.get("bold", False),
+                        "fontFamily": "Inter Tight"
+                    },
+                    "fields": "fontSize,foregroundColor,bold,fontFamily"
+                }
+            })
+
+
+    if create_requests:
+        slides_service.presentations().batchUpdate(
+            presentationId=presentation_id,
+            body={"requests": create_requests}
+        ).execute()
+    if text_requests:
+        slides_service.presentations().batchUpdate(
+            presentationId=presentation_id,
+            body={"requests": text_requests}
+        ).execute()
+        print(f"  Добавлено custom_texts блоков: {len(create_requests)}")
+
+
+def add_custom_images(slides_service, presentation_id: str, slide_assignments: list):
+    """
+    Вставляет изображения на слайды с точным позиционированием.
+    Format in plan.json:
+        "custom_images": [
+          {"url": "https://...", "x_cm": 10.1, "y_cm": 0.5, "w_cm": 4.5, "h_cm": 4.8}
+        ]
+    """
+    import uuid
+    requests = []
+    for plan_slide, slide_id, _ in slide_assignments:
+        for spec in plan_slide.get("custom_images", []):
+            x_emu = int(spec["x_cm"] * CM_TO_EMU)
+            y_emu = int(spec["y_cm"] * CM_TO_EMU)
+            w_emu = int(spec["w_cm"] * CM_TO_EMU)
+            h_emu = int(spec["h_cm"] * CM_TO_EMU)
+            requests.append({
+                "createImage": {
+                    "url": spec["url"],
+                    "elementProperties": {
+                        "pageObjectId": slide_id,
+                        "size": {
+                            "width": {"magnitude": w_emu, "unit": "EMU"},
+                            "height": {"magnitude": h_emu, "unit": "EMU"}
+                        },
+                        "transform": {
+                            "scaleX": 1, "scaleY": 1,
+                            "translateX": x_emu, "translateY": y_emu,
+                            "unit": "EMU"
+                        }
+                    }
+                }
+            })
+    if requests:
+        slides_service.presentations().batchUpdate(
+            presentationId=presentation_id,
+            body={"requests": requests}
+        ).execute()
+        print(f"  Добавлено custom_images: {len(requests)}")
+
+
+def hide_slides(slides_service, presentation_id: str, slide_assignments: list):
+    """Скрывает слайды, помеченные hidden: true в plan.json."""
+    requests = []
+    for plan_slide, slide_id, _ in slide_assignments:
+        if plan_slide.get("hidden"):
+            requests.append({
+                "updateSlideProperties": {
+                    "objectId": slide_id,
+                    "slideProperties": {"isSkipped": True},
+                    "fields": "isSkipped"
+                }
+            })
+    if requests:
+        slides_service.presentations().batchUpdate(
+            presentationId=presentation_id,
+            body={"requests": requests}
+        ).execute()
+        print(f"  Скрыто слайдов: {len(requests)}")
+
+
 def build_presentation(plan: dict) -> str:
     creds = Credentials.from_authorized_user_file('token.json', SCOPES)
     slides_service = build('slides', 'v1', credentials=creds, cache_discovery=False)
@@ -735,6 +898,15 @@ def build_presentation(plan: dict) -> str:
 
     print("Применяю переопределения размера шрифта...")
     apply_font_sizes(slides_service, new_id, slide_assignments)
+
+    print("Добавляю custom_texts блоки...")
+    add_custom_texts(slides_service, new_id, slide_assignments)
+
+    print("Добавляю custom_images...")
+    add_custom_images(slides_service, new_id, slide_assignments)
+
+    print("Скрываю hidden-слайды...")
+    hide_slides(slides_service, new_id, slide_assignments)
 
     return new_id
 
