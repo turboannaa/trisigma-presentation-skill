@@ -580,7 +580,8 @@ def fit_text_to_frame(slides_service, presentation_id: str,
         return lines * pt * 12700 * 1.45 + pt * 12700 * 1.0
 
     def optimal_pt(text, orig_pt, eff_w, eff_h):
-        """±5pt максимум от orig_pt шаблона."""
+        """Подбирает шрифт: сначала пробует увеличить до +5pt,
+        затем уменьшает до 10pt пока текст не влезет в фрейм."""
         if estimate_height(text, orig_pt, eff_w) <= eff_h:
             best = orig_pt
             for delta in range(1, 6):
@@ -590,14 +591,11 @@ def fit_text_to_frame(slides_service, presentation_id: str,
                     break
             return best
         else:
-            for delta in range(1, 6):
-                c = orig_pt - delta
-                if c < 10:
-                    return 10
-                if estimate_height(text, c, eff_w) <= eff_h:
-                    return c
-            # Максимальное уменьшение — 5pt, не больше
-            return max(10, orig_pt - 5)
+            # Уменьшаем шрифт без ограничения ±5pt — до 10pt
+            for pt in range(int(orig_pt) - 1, 9, -1):
+                if estimate_height(text, pt, eff_w) <= eff_h:
+                    return pt
+            return 10
 
     groups = defaultdict(list)
     for plan_slide, slide_id, elem_map in slide_assignments:
@@ -671,7 +669,7 @@ def apply_font_sizes(slides_service, presentation_id: str,
     requests = []
     for plan_slide, slide_id, elem_map in slide_assignments:
         for orig_id, size_pt in plan_slide.get("font_size_overrides", {}).items():
-            size_pt = max(10, size_pt)
+            size_pt = max(7, size_pt)
             real_id = elem_map.get(orig_id, orig_id)
             requests.append({
                 "updateTextStyle": {
@@ -688,6 +686,85 @@ def apply_font_sizes(slides_service, presentation_id: str,
             presentationId=presentation_id,
             body={"requests": requests}
         ).execute()
+
+
+def expand_frames_to_slide_bottom(slides_service, presentation_id: str,
+                                  slide_assignments: list):
+    """
+    Растягивает высоту текстовых фреймов до нижнего края слайда (минус отступ 0.3см),
+    чтобы текст гарантированно влезал и не вылезал за пределы слайда.
+    Затрагивает только фреймы из element_replacements, у которых есть явный текст.
+    """
+    MARGIN_EMU = int(0.3 * 360000)  # 0.3 cm
+    CM = 360000
+
+    pres = get_presentation(slides_service, presentation_id)
+    slide_h = pres.get('pageSize', {}).get('height', {}).get('magnitude', 6858000)
+
+    elem_lookup = {}
+    for slide in pres['slides']:
+        for e in slide.get('pageElements', []):
+            elem_lookup[e['objectId']] = e
+
+    requests = []
+    for plan_slide, slide_id, elem_map in slide_assignments:
+        for orig_id, new_text in plan_slide.get('element_replacements', {}).items():
+            if not new_text:
+                continue
+            real_id = elem_map.get(orig_id, orig_id)
+            elem = elem_lookup.get(real_id)
+            if not elem or 'shape' not in elem:
+                continue
+
+            size = elem.get('size', {})
+            tr = elem.get('transform', {})
+            y_emu = tr.get('translateY', 0)
+            h_emu = size.get('height', {}).get('magnitude', 0)
+            x_emu = tr.get('translateX', 0)
+            w_emu = size.get('width', {}).get('magnitude', 0)
+            sx = tr.get('scaleX', 1)
+            sy = tr.get('scaleY', 1)
+
+            # Максимальная высота: от y до нижнего края слайда минус отступ
+            max_h = slide_h - y_emu - MARGIN_EMU
+            if max_h <= h_emu * sy:
+                continue  # фрейм уже на пределе
+
+            new_h = max_h
+            requests.append({
+                "updatePageElementTransform": {
+                    "objectId": real_id,
+                    "applyMode": "ABSOLUTE",
+                    "transform": {
+                        "scaleX": sx,
+                        "scaleY": sy,
+                        "translateX": x_emu,
+                        "translateY": y_emu,
+                        "unit": "EMU"
+                    }
+                }
+            })
+            # Resize height
+            requests.append({
+                "updatePageElementTransform": {
+                    "objectId": real_id,
+                    "applyMode": "ABSOLUTE",
+                    "transform": {
+                        "scaleX": sx,
+                        "scaleY": new_h / h_emu if h_emu > 0 else sy,
+                        "translateX": x_emu,
+                        "translateY": y_emu,
+                        "unit": "EMU"
+                    }
+                }
+            })
+
+    if requests:
+        slides_service.presentations().batchUpdate(
+            presentationId=presentation_id,
+            body={"requests": requests}
+        ).execute()
+        print(f"  Расширено фреймов: {len(requests) // 2}")
 
 
 def add_custom_texts(slides_service, presentation_id: str,
@@ -889,6 +966,9 @@ def build_presentation(plan: dict) -> str:
     # apply_target_lines ДОЛЖЕН идти ДО replace_elements
     print("Подгоняю ширину фреймов под целевое число строк...")
     apply_target_lines(slides_service, new_id, slide_assignments)
+
+    print("Расширяю фреймы до нижнего края слайда...")
+    expand_frames_to_slide_bottom(slides_service, new_id, slide_assignments)
 
     print("Заменяю текст...")
     replace_elements(slides_service, new_id, slide_assignments)
